@@ -57,11 +57,10 @@ class Board extends React.Component {
 	render() {
 		
 		const winner = calculateWinner(this.state.squares);
-		console.log(winner);
 		let status;
 
 		if(winner) {
-			status = `Winner ${winner}`;
+			status = (winner === "X" || winner === "O") ? `Winner ${winner}` : 'Tied Game';
 		} else {
 			status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 		}
@@ -125,10 +124,15 @@ function calculateWinner(squares) {
     [2, 4, 6],
   ];
   for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+		const [a, b, c] = lines[i];
+		
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
-    }
+    } else {
+			if (squares.find((element) => {return element === null }) !== null){
+				return -1;
+			}
+		}
   }
   return null;
 }
